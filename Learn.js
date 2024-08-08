@@ -1,71 +1,167 @@
-function fib(n, memo = {}) {
+// water trap
+function waterTrap(arr) {
+  var l = 0,
+    r = arr.length - 1;
+  var L = arr[0],
+    R = arr[r];
+  var total = 0;
+  while (l < r) {
+    if (L < R) {
+      l++;
+      L = Math.max(L, arr[l]);
+      total += L - arr[l];
+    } else {
+      r--;
+      R = Math.max(R, arr[r]);
+      total += R - arr[r];
+    }
+  }
+  return total;
+}
+
+// fibonaccie series
+function fib(n) {
+  var cur = 1,
+    pre = 0,
+    arr = [pre, cur];
+  for (let i = 1; i < n - 1; i++) {
+    var temp = cur + pre;
+    pre = cur;
+    cur = temp;
+    arr.push(cur);
+  }
+  console.log(arr);
+}
+
+//  nth fibonaccie
+function fib(n) {
+  if (n <= 2) {
+    return 1;
+  }
+  return fib(n - 1) + fib(n - 2);
+}
+
+function fibMemo(n, memo = {}) {
   if (n in memo) {
     return memo[n];
   }
-  if (n == 0) {
-    return 0;
-  }
-  if (n == 1 || n == 2) {
+  if (n <= 2) {
     return 1;
   }
-  memo[n] = fib(n - 1, memo) + fib(n - 2, memo);
+  memo[n] = fibMemo(n - 1, memo) + fibMemo(n - 2, memo);
+
   return memo[n];
 }
 
-function noWays(m, n, memo = {}) {
-  const key = m + "," + n;
-  if (key in memo) return memo[key];
-  if (m == 1 && n == 1) return 1;
-  if (m == 0 || n == 0) return 0;
-  memo[key] = noWays(m - 1, n, memo) + noWays(m, n - 1, memo);
+// row and colum bottom reach
+function npOfWays(m, n) {
+  if (m == 1 && n == 1) {
+    return 1;
+  }
+  if (m == 1 || n == 1) {
+    return 1;
+  }
+  if (m == 0 || n == 0) {
+    return 0;
+  }
+  return npOfWays(m - 1, n) + npOfWays(m, n - 1);
+}
+
+function npOfWaysMemo(m, n, memo = {}) {
+  var key = m + "," + n;
+  if (key in memo) {
+    return memo[key];
+  }
+  if (m == 1 && n == 1) {
+    return 1;
+  }
+  if (m == 1 || n == 1) {
+    return 1;
+  }
+  if (m == 0 || n == 0) {
+    return 0;
+  }
+  memo[key] = npOfWaysMemo(m - 1, n, memo) + npOfWaysMemo(m, n - 1, memo);
   return memo[key];
 }
 
-function canSum(target, numbers, memo = {}) {
-  if (target in memo) {
-    return memo[target];
+// array can sum targetValue
+function canSum(targetSum, numbers) {
+  if (targetSum === 0) {
+    return true;
   }
-  if (target == 0) return true;
-  if (target < 0) return false;
+  if (targetSum < 0) {
+    return false;
+  }
   for (let num of numbers) {
-    let remainder = target - num;
-    if (canSum(remainder, numbers, memo) == true) {
-      memo[target] = true;
+    const remainder = targetSum - num;
+    if (canSum(remainder, numbers) === true) {
       return true;
     }
   }
-  memo[target] = false;
   return false;
 }
 
-function howSum(target, numbers) {
-  if (target == 0) return [];
-  if (target < 0) return null;
+function canSumMemo(targetSum, numbers, memo = {}) {
+  if (targetSum in memo) {
+    return memo[targetSum];
+  }
+  if (targetSum === 0) {
+    return true;
+  }
+  if (targetSum < 0) {
+    return false;
+  }
   for (let num of numbers) {
-    const remainder = target - num;
-    const result = howSum(remainder, numbers);
-    if (result != null) {
-      return [...result, num];
+    const remainder = targetSum - num;
+    if (canSumMemo(remainder, numbers, memo) === true) {
+      memo[targetSum] = true;
+      return true;
+    }
+  }
+  memo[targetSum] = false;
+  return false;
+}
+// how many ways can array sum targetValue
+function howSum(targetSum, numbers) {
+  if (targetSum === 0) {
+    return [];
+  }
+  if (targetSum < 0) {
+    return null;
+  }
+  for (let num of numbers) {
+    const remainder = targetSum - num;
+    const remainderResult = howSum(remainder, numbers);
+    if (remainderResult !== null) {
+      return [...remainderResult, num];
     }
   }
   return null;
 }
-function howSumMemo(target, numbers, memo = {}) {
-  if (target in memo) return memo[target];
-  if (target == 0) return [];
-  if (target < 0) return null;
+function howSumMemo(targetSum, numbers, memo = {}) {
+  if (targetSum in memo) {
+    return memo[targetSum];
+  }
+  if (targetSum === 0) {
+    return [];
+  }
+  if (targetSum < 0) {
+    return null;
+  }
   for (let num of numbers) {
-    const remainder = target - num;
-    const result = howSumMemo(remainder, numbers, memo);
-    if (result != null) {
-      memo[target] = [...result, num];
-      return [...result, num];
+    const remainder = targetSum - num;
+    const remainderResult = howSumMemo(remainder, numbers, memo);
+    if (remainderResult !== null) {
+      memo[targetSum] = [...remainderResult, num];
+      return memo[targetSum];
     }
   }
-  memo[target] = null;
+  memo[targetSum] = null;
   return null;
 }
 
+// best way array can sum targetValue
 function bestSum(target, numbers) {
   if (target == 0) return [];
   if (target < 0) return null;
@@ -100,7 +196,7 @@ function bestSumMemo(target, numbers, memo = {}) {
   memo[target] = shortComb;
   return shortComb;
 }
-
+// can Construct target string from array
 function canConstruct(target, words) {
   if (target == "") return true;
   for (let word of words) {
@@ -130,6 +226,8 @@ function canConstructMemo(target, words, memo = {}) {
   memo[target] = false;
   return false;
 }
+
+//how many ways can Construct target string from array
 function howMWayConstruct(target, words) {
   if (target == "") return 1;
   var total = 0;
@@ -159,7 +257,7 @@ function howMWayConstructMemo(target, words, memo = {}) {
   memo[target] = total;
   return total;
 }
-
+//all ways can Construct target string from array
 function allWays(target, words) {
   if (target == "") return [[]];
   var result = [];
@@ -174,41 +272,3 @@ function allWays(target, words) {
   }
   return result;
 }
-
-// console.log(howMWayConstructMemo("ade", ["ab", "a", "c", "de", "b"]));
-
-function waterTrap(arr) {
-  var l = 0,
-    r = arr.length - 1;
-  var L = arr[0],
-    R = arr[r];
-  var total = 0;
-  while (l < r) {
-    if (L < R) {
-      l++;
-      L = Math.max(L, arr[l]);
-      total += L - arr[l];
-    } else {
-      r--;
-      R = Math.max(R, arr[r]);
-      total += R - arr[r];
-    }
-  }
-  return total;
-}
-// console.log(waterTrap([2,0,1]))
-
-function fib(n) {
-  var cur = 1,
-    pre = 0,
-    arr = [pre, cur];
-  for (let i = 1; i < n - 1; i++) {
-    var temp = cur + pre;
-    pre = cur;
-    cur = temp;
-    arr.push(cur);
-  }
-  console.log(arr);
-}
-
-// fib(5)
