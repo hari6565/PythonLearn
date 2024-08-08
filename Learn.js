@@ -160,4 +160,55 @@ function howMWayConstructMemo(target, words, memo = {}) {
   return total;
 }
 
-console.log(howMWayConstructMemo("ade", ["ab", "a", "c", "de", "b"]));
+function allWays(target, words) {
+  if (target == "") return [[]];
+  var result = [];
+  for (let word of words) {
+    if (target.indexOf(word) == 0) {
+      const suffix = target.slice(word.length);
+      const suffixWays = allWays(suffix, words);
+      const targetWays = suffixWays.map((keys) => [word, ...keys]);
+      console.log(targetWays);
+      result.push(...targetWays);
+    }
+  }
+  return result;
+}
+
+// console.log(howMWayConstructMemo("ade", ["ab", "a", "c", "de", "b"]));
+
+function waterTrap(arr) {
+  var l = 0,
+    r = arr.length - 1;
+  var L = arr[0],
+    R = arr[r];
+  var total = 0;
+  while (l < r) {
+    if (L < R) {
+      l++;
+      L = Math.max(L, arr[l]);
+      total += L - arr[l];
+    } else {
+      r--;
+      R = Math.max(R, arr[r]);
+      total += R - arr[r];
+    }
+  }
+  return total;
+}
+// console.log(waterTrap([2,0,1]))
+
+function fib(n) {
+  var cur = 1,
+    pre = 0,
+    arr = [pre, cur];
+  for (let i = 1; i < n - 1; i++) {
+    var temp = cur + pre;
+    pre = cur;
+    cur = temp;
+    arr.push(cur);
+  }
+  console.log(arr);
+}
+
+// fib(5)
