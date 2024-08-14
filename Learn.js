@@ -228,20 +228,19 @@ function canConstructMemo(target, words, memo = {}) {
 }
 
 //how many ways can Construct target string from array
-function howMWayConstruct(target, words) {
+function howManyWayConstruct(target, words) {
   if (target == "") return 1;
   var total = 0;
   for (let word of words) {
     if (target.indexOf(word) == 0) {
       const suffix = target.slice(word.length);
-      const ways = howMWayConstruct(suffix, words);
-      total += ways;
+      total += howManyWayConstruct(suffix, words);
     }
   }
   return total;
 }
 
-function howMWayConstructMemo(target, words, memo = {}) {
+function howManyWayConstructMemo(target, words, memo = {}) {
   if (target in memo) {
     return memo[target];
   }
@@ -250,8 +249,7 @@ function howMWayConstructMemo(target, words, memo = {}) {
   for (let word of words) {
     if (target.indexOf(word) == 0) {
       const suffix = target.slice(word.length);
-      const ways = howMWayConstructMemo(suffix, words, memo);
-      total += ways;
+      total += howManyWayConstructMemo(suffix, words, memo);
     }
   }
   memo[target] = total;
@@ -271,4 +269,91 @@ function allWays(target, words) {
     }
   }
   return result;
+}
+
+function allWaysMemo(target, words, memo = {}) {
+  if (target in memo) return memo[target];
+  if (target == "") return [[]];
+  var result = [];
+  for (let word of words) {
+    if (target.indexOf(word) == 0) {
+      const suffix = target.slice(word.length);
+      const suffixWays = allWaysMemo(suffix, words, memo);
+      const targetWays = suffixWays.map((keys) => [word, ...keys]);
+      result.push(...targetWays);
+    }
+  }
+  memo[target] = result;
+  return result;
+}
+
+// Tablation
+
+// fib tablation
+function fibTablation(n) {
+  var table = Array(n + 1).fill(0);
+  table[1] = 1;
+
+  for (let i = 0; i <= n; i++) {
+    table[i + 1] += table[i];
+    table[i + 2] += table[i];
+  }
+  console.log(table);
+  return table[n];
+}
+
+function gridTravlerTablation(m, n) {
+  const table = Array(m + 1)
+    .fill()
+    .map(() => Array(n + 1).fill(0));
+  table[1][1] = 1;
+  for (let i = 0; i <= m; i++) {
+    for (let j = 0; j <= n; j++) {
+      const temp = table[i][j];
+      if (j + 1 <= n) table[i][j + 1] += temp;
+      if (i + 1 <= m) table[i + 1][j] += temp;
+    }
+  }
+  return table;
+}
+
+function canSumTabulation(target, numbers) {
+  const table = Array(target + 1).fill(false);
+  table[0] = true;
+  for (let i = 0; i < target; i++) {
+    if (table[i] == true) {
+      for (let num of numbers) {
+        table[i + num] = true;
+      }
+    }
+  }
+  return table[target];
+}
+
+function howTabulation(target, numbers) {
+  const table = Array(target + 1).fill(null);
+  table[0] = [];
+  for (let i = 0; i < target; i++) {
+    if (table[i] != null) {
+      for (let num of numbers) {
+        table[i + num] = [...table[i], num];
+      }
+    }
+  }
+  return table[target];
+}
+
+function bestTablation(targetSum, numbers) {
+  const table = Array(targetSum + 1).fill(null);
+  table[0] = [];
+  for (let i = 0; i < targetSum; i++) {
+    if (table[i] != null) {
+      for (let num of numbers) {
+        const combination = [...table[i], num];
+        if (!table[i + num] || table[i + num].length > combination.length)
+          table[i + num] = [...table[i], num];
+      }
+    }
+  }
+  return table[targetSum];
 }
