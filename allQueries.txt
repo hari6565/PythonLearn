@@ -1,0 +1,219 @@
+--CREATE Database: myProject1
+CREATE DATABASE myProject1 WITH OWNER = postgres
+-- DROP DATABASE IF EXISTS "myProject1";
+DROP DATABASE IF EXISTS myProject1;
+
+--CREATE TABLE: test1
+CREATE TABLE test1(U_name VARCHAR(255),age INT)
+-- DROP TABLE IF EXISTS "test1";
+DROP TABLE test1
+DROP TABLE IF EXISTS test1
+
+--INSERT INTO
+insert into student(U_name,age) values ('amar',45)
+*multiples
+insert into student(U_name,age) values ('deva',41),('assassin',65)
+*specifig 
+insert into student(U_name) values ('hhh')
+
+--FETCH 
+SELECT * FROM student;
+*specifig 
+select U_name from student
+
+--ADD COLUMN 
+alter table student add school VARCHAR(255)
+
+--UPDATE
+UPDATE student SET school = 'phss' WHERE U_name = 'hari'
+
+--ALTER COLUMN U_name
+alter table student rename column school to place
+alter table student rename column place to school
+
+--ALTER COLUMN TYPE 
+ALTER TABLE student ALTER COLUMN school TYPE VARCHAR(30)
+
+--DROP COLUMN 
+ALTER TABLE student DROP COLUMN colour
+
+--DELETE RECORD
+--ALL
+DELETE FROM student
+--SPECIFIG
+DELETE FROM student WHERE U_name='hhh'
+
+
+--SAMPLE DATABASE
+-- Create table
+CREATE TABLE employees (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    age INT,
+    salary DECIMAL(10, 2),
+    date_of_birth DATE
+);
+
+-- Insert 10 rows
+INSERT INTO employees (name, age, salary, date_of_birth) VALUES
+('Alice', 30, 50000.00, '1994-05-15'),
+('Bob', 45, 60000.00, '1979-08-22'),
+('Charlie', 29, 55000.00, '1995-11-30'),
+('Diana', 35, 65000.00, '1989-04-12'),
+('Edward', 50, 70000.00, '1974-03-25'),
+('Fiona', 40, 62000.00, '1983-07-19'),
+('George', 28, 53000.00, '1996-09-08'),
+('Hannah', 33, 58000.00, '1991-12-01'),
+('Ian', 41, 64000.00, '1982-10-15'),
+('Jane', 37, 57000.00, '1987-02-20'),
+('Alice', 30, 50000.00, '1994-05-15'),
+('Bob', 45, 60000.00, '1979-08-22'),
+
+
+--OPERATORS
+--equal
+select * from employees where name='Bob'
+select * from employees where age=50
+
+--greater
+SELECT * FROM employees where age>33
+SELECT * FROM employees where salary>60000.00
+
+--lesser
+SELECT * FROM employees where age<33
+SELECT * FROM employees where salary<60000.00
+
+--greaterthenquel
+SELECT * FROM employees where age>=33
+SELECT * FROM employees where salary>=60000.00
+
+--lesserthenequal
+SELECT * FROM employees where age=<33
+SELECT * FROM employees where salary=<60000.00
+
+--notequal
+select * from employees where name!='Bob'
+SELECT * FROM employees where age!=33
+SELECT * FROM employees where salary<>60000.00
+
+--like
+select * from employees where name like 'A%'
+select * from employees where name like '%a%'
+select * from employees where name like '%e'
+SELECT * FROM employees WHERE name LIKE 'A_i__';
+SELECT * FROM employees where cast(age as varchar) like '3%'
+SELECT * FROM employees where cast(age as varchar) like '%5'
+SELECT * FROM employees where cast(age as varchar) like '%8%'
+SELECT * FROM employees where cast(age as varchar) like '3_'
+
+--AND
+select * from employees where name='Alice' AND age=30
+
+--OR
+select * from employees where name='Alice' OR age=35
+
+--IN
+select * from employees where name IN ('Alice','Bob')
+
+--BETWEEN
+select * from employees where age BETWEEN 30 and 40
+
+--NOT LIKE
+select * from employees where name NOT LIKE 'A%'
+select * from employees where name NOT LIKE '%a%'
+select * from employees where name NOT LIKE '%e'
+SELECT * FROM employees WHERE name NOT LIKE 'A_i__';
+SELECT * FROM employees where cast(age as varchar) NOT LIKE '3%'
+SELECT * FROM employees where cast(age as varchar) NOT LIKE '%5'
+SELECT * FROM employees where cast(age as varchar) NOT LIKE '%8%'
+SELECT * FROM employees where cast(age as varchar) NOT LIKE '3_'
+
+--NOT IN
+select * from employees where name NOT IN ('Alice','Bob')
+
+--NOT BETWEEN
+select * from employees where age NOT BETWEEN 30 and 40
+
+--null
+select * from employees where age is null
+
+--not null
+select * from employees where age is not null
+
+--DISTINCT
+SELECT DISTINCT age FROM employees
+
+--COUNT
+SELECT COUNT(age) FROM employees
+
+--DISTINCT-COUNT
+SELECT COUNT(DISTINCT age) FROM employees
+
+--ASCENDING
+select * from employees ORDER BY name
+
+--DESCENDING
+select * from employees ORDER BY age DESC
+
+--LIMIT
+SELECT * FROM employees LIMIT 5
+
+--OFFSET-LIMIT
+SELECT * FROM employees LIMIT 5 OFFSET 3
+
+--MIN 
+SELECT MIN(salary) FROM employees 
+
+--MAX
+SELECT MAX(salary) FROM employees 
+
+--SUM
+SELECT SUM(salary) FROM employees 
+
+--AVG
+SELECT AVG(salary) FROM employees 
+
+--ALIAS
+SELECT name as U_name FROM employees
+
+--SAMPLE DATA 2 
+CREATE TABLE userDetails(
+     id SERIAL PRIMARY KEY,
+    u_id INTEGER NOT NULL,
+    phone VARCHAR(15),
+    sex CHAR(1)
+);
+
+INSERT INTO userDetails (u_id,phone, sex) VALUES
+(3, '123-456-7890', 'M'),
+(3, '234-567-8901', 'F'),
+(3, '345-678-9012', 'M'),
+(4, '456-789-0123', 'F'),
+(5, '567-890-1234', 'M'),
+(5, '678-901-2345', 'F'),
+(7, '789-012-3456', 'M'),
+(15, '890-123-4567', 'F'),
+(15, '901-234-5678', 'M'),
+(10, '012-345-6789', 'F');
+
+--INNER-JOIN
+select *  from employees INNER JOIN userDetails ON employees.id=userDetails.u_id
+
+--LEFT-JOIN
+select *  from employees LEFT JOIN userDetails ON employees.id=userDetails.u_id
+
+--RIGTH-JOIN
+select *  from employees RIGHT JOIN userDetails ON employees.id=userDetails.u_id
+
+--FULL-JOIN
+select *   from employees FULL JOIN userDetails ON employees.id=userDetails.u_id
+
+--CROSS-JOIN 
+SELECT * FROM employees CROSS JOIN userDetails
+SELECT DISTINCT name,sex FROM employees CROSS JOIN userDetails 
+
+--UNION
+SELECT name FROM employees UNION SELECT sex FROM userDetails
+
+--UNION-ALL
+SELECT name FROM employees UNION ALL SELECT sex FROM userDetails

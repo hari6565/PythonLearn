@@ -1,0 +1,74 @@
+RAM
+2*8GBddr5
+2*8GBddr4
+if budget and recommented
+2*16GBddr5
+2*16GBddr4
+
+there is no difference between DDR4 and DDR5 based on performance
+but in future game optimazation are more great in DDR5
+
+MOTHERBOARD
+must have overclocking support
+must have wifi
+must have atleast 4 ram slates
+
+PROCESSOR
+must have overclocking support
+must have integrated graphics atleast 4GB to 8GB
+must APU with
+
+MONITOR-
+inches 27 to 32
+
+monitor type VA<MiniLED<OLED
+these all are best
+
+HDR - High Dynamic Range
+impoves the contrast btw the brightest and the darkest spot
+resolution
+1) 1920x1080-FHD -enougth gaming
+2) 2560x1440-GHD- enougth gaming
+3) 3840x210-UHD(4K)
+
+AMD FreeSync or NVIDIA G-Sync Compatible
+
+must have VRR property
+
+high pixels have more details
+High refresh rate+ Low latency+Fast responce time = best gamin experience
+refresh rate
+in 120Hz Refresh rate 
+time btw frames=8.33ms minimum input lag=4.17ms
+
+in 60Hz Refresh rate 
+time btw frames=16.67ms minimum input lag=8.33ms
+
+refresh-rate >=120Hz 
+so choose
+
+refresh-rate >=120Hz 
+gets
+conclusion
+24"1080p | 27"1440p
+144+Hz Refresh rate
+VA | IPS are great,
+MiniLED | OLED are better
+VRR essential
+Response Time < 5ms
+(1-2ms ideal)
+
+RAM - 10k
+MOTHERBOARD - 6k
+PROCESSOR - 12K-15K
+MONITOR-10k-15K
+SMPS-3K
+
+low
+10K+6K+12K+10K+3K = 41k
+high
+10K+6K+15K+15K+3K = 49k
+
+
+
+
